@@ -1,0 +1,85 @@
+<div class="middle__container " id="blog-container">
+
+    {% if blogs|length>0%} {%for blogs in blogs%}
+    <div class="author_section d-flex mb-2">
+        {% if authors|length!=0%}
+        <div class="text-font author__profile">
+
+            <a href="/{{authors[loop.index-1][0]}}" class="blog-color">
+                                        {% if authors[loop.index-1][1]!=None %}
+                                            <img class=" image-size profile__image" src="{{authors[loop.index-1][1]}}" alt=""> 
+                                        {% else %}
+                                            <span class="text-profile profile__image">{{authors[loop.index-1][0][0].upper()}}</span> 
+                                        {%endif%} <span class="author__name__span">
+                                            {{authors[loop.index-1][0]}}
+                                        </span>
+                                    </a>
+
+        </div>
+        {%endif%}
+
+    </div>
+    <div class="blog_column d-flex gap-4 m-3 blog-desc-color">
+        <div class="vr" style="width:5px;"></div>
+        <div>
+            <div class="blog__title d-flex mb-2">
+                <h4 class="me-auto">
+                    <b>{{blogs['title']}}</b>
+                </h4>
+                {% if onprofile and currentUser==username_on_page%}
+                <span>
+                    <a href="" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img height="25px" src="../../static/media/Icons/dots.png" alt="" >
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="/editblog/{{blogs['id']}}">Edit Blog</a></li>
+                        <li><a class="dropdown-item" id="liveToastBtn" onclick="showToast('{{blogs['id']}}','{{blogs['title']}}')">Delete Blog</a></li>
+                    </ul>
+                </span> {%endif%}
+            </div>
+            <div class="description_section" id="description{{loop.index}}">{{blogs['description']}}</div>
+            {% if read_option[blogs['id']] %}
+            <span><a class="to_shot_or_not" id="readmore{{loop.index}}" data-id="{{loop.index}}" onclick="expandDescription(event)" style="color: rgb(72, 203, 246);">Read more</a></span>
+            <span><a class="hide_read to_shot_or_not" id="readless{{loop.index}}" data-id="{{loop.index}}" onclick="shrinkDescription(event)" style="color: rgb(72, 203, 246);">Read less</a></span> {%endif%}
+            <div class="media_section ">
+                {% if blogs['imageURL'] %} {% if extension[loop.index-1]=="mp4"%}
+                <video style="border:4px solid black;" width="100%" max-height=500px " controls playsinline autoplay muted loop>
+                                        <source src="../../{{blogs[ 'imageURL']}} " type="video/mp4 ">
+                                    </video> {%else%}
+                <img width="100% " style="border:4px solid black; " src="../../{{blogs[ 'imageURL']}} " alt=" " /> {%endif%}{%else%}
+                <span></span> {%endif%}
+            </div>
+            <br>
+            <div class="engagement_section d-flex mb-2 ">
+                
+                <div>
+                    {% if current_user.is_authenticated and clapped[blogs['id']] %}
+                    <a id="clap-black " onclick="clapped({{blogs[ 'id']}},false) ">
+                        <img class="clap " src="../../static/media/Icons/clap_black.png " alt=" ">
+                    </a>
+                    {% else %}
+                    <a id="clap-white " onclick="clapped({{blogs[ 'id']}},true) ">
+                        <img class="clap " src="../../static/media/Icons/clap_white.png " alt=" ">
+                    </a>
+                    {%endif%} {{isClapped[blogs['id']]}}
+                </div>
+                <div class="blog__timestamp ms-auto text-font ">
+                    {{blogs['timestamp']}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    {%endfor%} {%else%}
+
+    <center class="center-div ">
+        <div class="no-blogs-text ">
+            There are no post in your feed.Connect with other users to see what they are posting...
+        </div>
+        <div class="emoticons ">
+            └(^o^ )Ｘ( ^o^)┘
+        </div>
+    </center>
+
+    {%endif%}
+</div>

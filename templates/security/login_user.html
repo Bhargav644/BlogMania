@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlogLite:Words Are Free</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="icon" type="image/x-icon" href="../../static/media/FavIcons/favicon.ico">
+    <!-- Latest Bootstrap compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        {% include "/header/navbar.html" %} {% from "security/_macros.html" import render_field_with_errors, render_field %} {% include "security/_messages.html" %}
+
+        <div class="form-heading">
+            <h1>{{ _('Log In') }}</h1>
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </div>
+        <div class="d-flex m-auto justify-content-around mt-sm-5 form-flex-container" style="width:80%">
+            <div class="form-container">
+                <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form" autocomplete="off">
+                    {{ login_user_form.hidden_tag() }}
+                    <table class="form-table">
+                        <div class="form__field form__field--login">
+                            {{ render_field_with_errors(login_user_form.email) }} {{ render_field_with_errors(login_user_form.password) }}
+                        </div>
+
+                    </table>
+                    {{ render_field_with_errors(login_user_form.remember) }} {{ render_field(login_user_form.next) }} {{ render_field(login_user_form.submit)}}
+                </form>
+            </div>
+            <div class="beetween " style="width: 2%; ">
+                <div class="vr d-block h-50 "></div>
+                <p style="transform: translateX(-5px); margin-bottom:2px; color: rgb(151, 151, 151); ">
+                    or
+                </p>
+                <div class="vr d-block h-50 "></div>
+            </div>
+            <div class="side-login-container " style="width:40%; ">
+                {% include "body/sidelogin.html " %}
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../static/javascript/index.js "></script>
+
+</html>

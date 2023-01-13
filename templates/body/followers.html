@@ -1,0 +1,41 @@
+{%if followers|length!=0%} {%for user in followers%}
+<div class="follower_div  d-flex" id="followers" style="padding-top:4px">
+    <a href="/{{user['username']}}" class="follower_div d-flex">
+        <div class="followers_profile w-10">
+            {% if user['profile'] %}
+            <img class="image-size profile__image-md" src="../../{{user['profile']}}" alt=""> {% else %}
+            <span class="text-profile profile__image-md ">{{user['username'][0].upper()}}</span> {%endif%}
+        </div>
+        <div class="searched__user__name flex-fill">
+            <span class="span-text text-dark d-block author__name__span">{{user['username']}}</span>
+            <span class="span-text text-dark d-block">{{user['email']}}</span>
+        </div>
+        {% if currentUser==username_on_page%}
+        <div class="followers_button d-flex">
+
+            <form method="POST" action="/{{user['id']}}/tofollow/userpage">
+                {% if map_following[user['id']] or user['username']==currentUser%}
+                <input class="input-button input-button-light" type="submit" value="Follow" disabled> {% else %}
+                <input class="input-button input-button-dark" type="submit" value="Follow"> {%endif%}
+            </form>
+            <!-- <form method="POST" action="/{{user['id']}}/tounfollow">
+                {% if map_following[user['id']]%}
+                <input class="input-button input-button-dark" type="submit" value="Unfollow"> {% else %}
+                <input class="input-button input-button-light" type="submit" value="Unfollow" disabled> {%endif%}
+            </form> -->
+
+        </div>
+        {%endif%}
+    </a>
+</div>
+<br> {%endfor%} {%else%}
+<center class="center-div">
+    <div class="no-blogs-text">
+        All you need to do is post a blog that everyone will find interesting.
+    </div>
+    <div class="emoticons">
+        ¯\_(ツ)_/¯
+    </div>
+
+</center>
+{%endif%}

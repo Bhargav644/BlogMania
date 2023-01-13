@@ -1,0 +1,27 @@
+<div class="full__navbar">
+    <div class="navbar navbar-expand-lg ">
+        <div class="container-fluid d-flex flex-row flex-nowrap ">
+            <div class="brand p-1 flex-fill d-flex ">
+                <div class="p-1 w-25">
+                    <a class="navbar-brand" href="/ ">
+                        <img class="main__icon" src="../static/media/FavIcons/favicon-32x32.png"> BlogLite
+                    </a>
+                </div>
+                {% if current_user.is_authenticated%}
+                <div class="search__container">
+                    {% include 'header/search.html'%}
+                </div>
+                {% endif %}
+            </div>
+            <div class="p-2 flex-fill w-30  sidebar ">
+                {% include 'header/sidebar.html'%}
+            </div>
+        </div>
+    </div>
+    <!--? header or navbar ends here -->
+    {% if current_user.is_authenticated%}
+    <div class="another__search search__container">
+        {%include 'header/search.html'%}
+    </div>
+    {% endif %}
+</div>

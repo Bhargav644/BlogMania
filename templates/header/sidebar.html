@@ -1,0 +1,78 @@
+<div class="navbar__sidebar d-flex flex-row ">
+    {% if current_user.is_authenticated %}
+    <ul class="nav__items p-2">
+        <li class="sidebar__list">
+            <a class="notification" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if notifications|length>=1 %}
+                <img class="notific" src="../../static/media/Icons/notification_active.png" alt="">
+                {%else%}
+                <img class="icon-size" src="../../static/media/Icons/notification.png" alt="">
+                {%endif%}
+            </a> {% if notifications|length>=1 %}
+            <ul style="width:280px;" class="dropdown-menu dropdown-menu-end dropdown-menu-dark notification-dropdown">
+
+                <a class="read-all" href="/readall" style="position: absolute; right: 2%; font-size:8px;">Mark all as Read</a>
+                <p class="read-head" style="position: absolute; left: 2%;">Notifications</p>
+                <br>
+                <br> {%for i in notifications%}
+                <li>
+                    <a class="dropdown-item" href="/{{i[0]}}">
+                        <hr style="padding: 0; margin:4px 0;">
+                        <span class="author__name__span-lg">
+                            {{i[0]}} started following you.
+                        </span>
+                        <hr style="padding: 0; margin:4px 0;">
+                    </a>
+                </li>
+                {%endfor%}
+            </ul>
+            {%else%}
+            <ul style="width:280px;" class="dropdown-menu dropdown-menu-end dropdown-menu-dark notification-dropdown" style="z-index:400!important; position: absolute;">
+                <p class="read-head" style="position: absolute; left: 2%;">Notifications</p>
+                <br>
+                <br>
+                <li>
+                    <a class="dropdown-item" href="#" style="cursor: context-menu;">
+                        <hr style="padding: 0; margin:4px 0;"> No notifications yet..
+                        <hr style="padding: 0; margin:4px 0;">
+                    </a>
+                </li>
+            </ul>
+            {%endif%}
+        </li>
+        <li class="sidebar__list">
+            <a class="profile__link" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if current_user.profile%}
+                            <img class=" image-size profile__image" src="../../{{current_user.profile}}" alt="">
+                        {% else %}
+                            <span class="text-profile profile__image">{{current_user.username[0].upper()}}</span>
+                        {%endif%}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                <li>
+                    <a class="dropdown-item" href="/{{current_user.username}}">
+                        <img width="28px" height="25px" src="../../static/media/Icons/account.png" alt=""> My Profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/logout">
+                        <img width="28px" height="25px" classs="side-icon" src="../../static/media/Icons/logout.png" alt=""> Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="nav__items p-2">
+        <li class="sidebar__list">
+            <a href="/login">
+                <button type="button" class="side-button btn btn-outline-dark">Login</button>
+            </a>
+        </li>
+        <li class="sidebar__list">
+            <a href="/register">
+                <button type="button" class="btn side-button btn-outline-dark">Register</button>
+            </a>
+        </li>
+    </ul>
+    {% endif%}
+</div>

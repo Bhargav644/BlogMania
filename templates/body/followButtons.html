@@ -1,0 +1,22 @@
+{% if currentUser!=username_on_page%}
+
+<div class="engage__user d-flex" style="width: 90%; margin: auto; text-align: center;">
+
+    <div style="width: 50%; text-align: center;">
+        <form method="POST" action="/{{user['id']}}/tofollow">
+            {% if map_following[userid_on_page]%}
+            <input class="input-button input-button-light increase-width" type="submit" value="Follow" disabled> {% else %}
+            <input class="input-button input-button-dark increase-width" type="submit" value="Follow"> {%endif%}
+        </form>
+    </div>
+    <div style="width: 50%; text-align: center;">
+        <form method="POST" action="/{{user['id']}}/tounfollow">
+            {% if map_following[user['id']]%}
+            <input class="input-button input-button-dark increase-width" type="submit" value="Unfollow"> {% else %}
+            <input class="input-button input-button-light increase-width" type="submit" value="Unfollow" disabled> {%endif%}
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<br> {%endif%}

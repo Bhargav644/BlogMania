@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlogLite:Words Are Free</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="icon" type="image/x-icon" href="../../static/media/FavIcons/favicon.ico">
+    <!-- Latest Bootstrap compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="brand p-1 flex-fill d-flex w-100">
+            <div class="p-1 w-25">
+                <a class="navbar-brand" href="/ ">
+                    <img class="main__icon" src="../static/media/FavIcons/favicon-32x32.png"> BlogLite
+                </a>
+            </div>
+            <div class="p-2 ms-auto position-absolute back-home">
+                <a href="/">
+                    Go Back Home
+                </a>
+            </div>
+        </div>
+        <div class="body">
+
+            <div class="user__information profile__user__info d-flex">
+
+                <div class="profile__text profile__first__div" style="text-align: center;">
+
+
+                    <div class="for__absolute">
+                        <div class="text-font author__profile-lg">
+
+                            <a href="/{{user['username']}}" class="blog-color">
+                                {% if user['profile']!=None %}
+                                <img class=" image-size profile__image-lg" src="{{user['profile']}}" alt=""> {% else %}
+                                <span class="text-profile profile__image-lg">{{user['username'][0].upper()}}</span> {%endif%} 
+                            </a>
+                            <a class="profile__upload" id="profile__upload">
+                                <img id="camera-icon" src="../static//media/Icons/camera.png" alt="" srcset="">
+                            </a>
+                            <form action="/upload/profile/image" method="POST" enctype="multipart/form-data">
+                                <input type="file" name="profile-file" id="profile__upload__input" hidden>
+                                <input type="submit" value="" hidden id="profile__upload__submit">
+                            </form>
+                        </div>
+                    </div>
+
+                    <h3><b class="navbar-brand-like">
+                        {{user["username"]}}
+                    </b>
+                    </h3>
+                </div>
+                <div class="profile__engagement d-flex">
+                    <a onclick="slide('coursel-1','under-line-1','under-line-2','under-line-3')" class="profile__text__eng ">
+                        <span>{{total_post}}</span>
+                        <p>Posts</p>
+                        <hr class="under-line" id="under-line-1">
+                    </a>
+                    <!-- <a href="/{{current_user.id}}/followers" class="profile__text__eng"> -->
+                    <a onclick="slide('coursel-2','under-line-2','under-line-3','under-line-1')" class="profile__text__eng">
+                        <span>{{my_followers}}</span>
+                        <p>Followers</p>
+                        <hr class="under-line" id="under-line-2">
+                    </a>
+                    <!-- <a href="/{{current_user.id}}/following" class="profile__text__eng"> -->
+                    <a onclick="slide('coursel-3','under-line-3','under-line-1','under-line-2')" class="profile__text__eng">
+                        <span>{{i_follow}}</span>
+                        <p>Following</p>
+                        <hr class="under-line" id="under-line-3">
+                    </a>
+                </div>
+            </div>
+            {% include "body/followButtons.html"%}
+            <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators">
+                    <button id="coursel-1" hidden type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-black" aria-current="true" aria-label="Slide 1"></button>
+                    <button id="coursel-2" hidden type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-black" aria-label="Slide 2"></button>
+                    <button id="coursel-3" hidden type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="bg-black" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        {% include "body/blogs.html"%}
+                    </div>
+                    <div class="carousel-item">
+                        {% include "body/followers.html"%}
+                    </div>
+                    <div class="carousel-item">
+                        {% include "body/following.html "%}
+                    </div>
+                </div>
+                <!-- <div class="right__container "></div> -->
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast bg-black text-light" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-dark text-bg-light text-light">
+                <img src="../static/media/FavIcons/favicon-32x32.png" class="rounded me-2" alt="...">
+                <strong class="me-auto">BlogLite</strong>
+                <small></small>
+                <button type="button" class="btn-close text-light bg-light" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                This will delete blog named as '<span id="blog-title-toast"></span>'
+            </div>
+            <span hidden id="blog-id-toast"></span>
+            <button type="button" class="btn btn-danger btn-sm" style="margin:0px 0px 10px 10px; width: 130px!important;" onclick="deleteblog()">Delete</button>
+        </div>
+    </div>
+</body>
+<script src="../static/javascript/index.js "></script>
+<script src="../static/javascript/clap.js"></script>
+<script src="../static/javascript/profileupload.js"></script>
+<script src="../static/javascript/post.js"></script>
+
+</html>
