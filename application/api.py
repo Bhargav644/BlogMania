@@ -1,10 +1,11 @@
 from werkzeug.exceptions import HTTPException, NotFound
 from flask_restful import Resource, Api, fields, marshal_with, reqparse
-from flask import make_response
+from flask import make_response, current_app as app
 from application.models import Users, Blogs, Followers
 from flask_security import current_user
 from sqlalchemy import or_, and_
 from application.db_init import db
+
 user_fields = {
     "id": fields.Integer,
     "username": fields.String,
@@ -44,6 +45,7 @@ class NotFoundError(HTTPException):
 
 
 class UsersApi(Resource):
+
     @ marshal_with(user_fields)
     def get(self, username):
         # Get the user details from the database

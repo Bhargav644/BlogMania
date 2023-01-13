@@ -8,9 +8,13 @@ from application.models import Users, Role
 from application.config import Config
 from application.flaskSecurity import ExtendedRegisterForm
 import json
+from flask_restful import Api
+from application.api import BlogsApi, UsersApi, FollowersApi, NotificationsApi
+
 
 ''' Initializing Flask App Here '''
 app = None
+api = None
 
 
 def create_app():
@@ -31,10 +35,14 @@ def create_app():
 
     sec = Security(app, user_datastore,
                    register_form=ExtendedRegisterForm)
+    api = Api(app)
+    api.add_resource(BlogsApi, "/blog/details/api/<int:author_id>",)
+    api.add_resource(UsersApi, "/users/details/api/<username>",)
     return app
 
 
 app = create_app()
+
 
 ''' Import All The Routes To app.py'''
 Routes()

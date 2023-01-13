@@ -1,0 +1,33 @@
+---
+apiVersion: 1.0.0
+swaggerVersion: "1.2"
+basePath: "/"
+resourcePath: /users
+produces: 
+  - application/json
+apis:
+  - path: "/users/details/api/{username}"
+    operations:
+    - method: GET
+        summary: Retrieve a users's data using username
+        type: User
+        nickname: get
+        produces:
+          - application/json
+        parameters:
+          - username:Bhargav
+        responseMessages: 
+          - code: 404
+            message: User not found
+...
+
+models:
+  Blogs:
+    id: 1,
+    username: "Bhargav",
+    email: "bhargav@gmail.com",
+    password: "$2b$12$L2xJIsv3hftWcl2obD9qfONpEcRYCceNmLaaO5hfsjO1nMzLwDaoW",
+    active: "True",
+    roles: "[]",
+    profile: "static/media/blogs/profile/exxvk.jpeg",
+    notifications: null
