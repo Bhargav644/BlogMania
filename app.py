@@ -26,7 +26,7 @@ def create_app():
 
     ''' This will make current_app point at this application '''
     app.app_context().push()
-    # db.create_all()
+    db.create_all()
 
     ''' Letting Know Flask Security Regarding Our Data'''
     user_datastore = SQLAlchemySessionUserDatastore(db.session, Users, Role)
