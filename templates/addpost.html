@@ -33,7 +33,7 @@
                             <div class="author__section d-flex">
                                 <div>
                                     <a class="profile__link" data-bs-toggle="dropdown" aria-expanded="false" href="/{{current_user.username}}" target="">
-                                            {% if current_user.profile!=null %}
+                                            {% if current_user.profile %}
                                                 <img class=" image-size profile__image author__profile__image" src="../{{current_user.profile}}" alt="">
                                             {% else %}
                                                 <span class="text-profile profile__image author__profile__image">{{current_user.username[0].upper()}}</span>
