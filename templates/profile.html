@@ -39,7 +39,7 @@
                         <div class="text-font author__profile-lg">
 
                             <a href="/{{user['username']}}" class="blog-color">
-                                {% if user['profile']!=None %}
+                                {% if user['profile'] %}
                                 <img class=" image-size profile__image-lg" src="{{user['profile']}}" alt=""> {% else %}
                                 <span class="text-profile profile__image-lg">{{user['username'][0].upper()}}</span> {%endif%} 
                             </a>
