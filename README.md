@@ -12,6 +12,12 @@ Intructions:<br>
     <br>
     1. Open the project inside any code editor (ex VS Code)<br>
     2. Setting environment using command: <br>
+
+Make sure to install python3-venv
+
+```
+sudo apt install python3-venv
+```
     
 ```
 python -m venv ./venv in the current directory
